@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Find free and open-access books through grounded AI search.">
+    <title>{% block title %}FreeLib AI{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'discovery/style.css' %}">
+</head>
+
+<body>
+    <div class="app-shell">
+        <header class="site-header">
+            <nav class="page-wrap nav" aria-label="Main navigation"><a class="brand" href="{% url 'home' %}"><span
+                        class="brand-mark">✦</span><span>FreeLib <strong>AI</strong></span></a>
+                <div class="nav-links"><a href="{% url 'home' %}">Home</a><a href="{% url 'search' %}">Discover
+                        books</a></div>
+            </nav>
+        </header>
+        <main>{% block content %}{% endblock %}</main>
+        <footer class="page-wrap footer"><span>FreeLib AI</span><span>Book metadata belongs to its cited providers.
+                Check local copyright rules before downloading.</span></footer>
+    </div>
+    <script src="{% static 'discovery/app.js' %}" defer></script>
+</body>
+
+</html>

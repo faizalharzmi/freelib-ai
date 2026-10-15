@@ -1,0 +1,38 @@
+{% extends 'base.html' %}{% block title %}{{ book.title }} · FreeLib AI{% endblock %}{% block content %}<div
+    class="page-wrap detail-page"><a class="back" href="{% url 'search' %}">← Back to search</a>
+    <article class="detail-card">
+        <div class="detail-cover">{% if book.cover_url %}<img src="{{ book.cover_url }}"
+                alt="Cover of {{ book.title }}">{% else %}<span aria-hidden="true">📖</span>{% endif %}</div>
+        <div><span class="eyebrow">{{ book.source }}</span>
+            <h1>{{ book.title }}</h1>
+            <p class="detail-authors">{% if book.authors %}{{ book.authors|join:', ' }}{% else %}Author not listed{% endif %}</p>
+            <dl>
+                <div>
+                    <dt>Published</dt>
+                    <dd>{{ book.year|default:'Not listed' }}</dd>
+                </div>
+                <div>
+                    <dt>Language</dt>
+                    <dd>{{ book.language|default:'Not listed' }}</dd>
+                </div>
+                <div>
+                    <dt>Access</dt>
+                    <dd>{{ book.access_status|title }}</dd>
+                </div>
+                <div>
+                    <dt>Rights</dt>
+                    <dd>{{ book.license|default:'Check provider for local rights' }}</dd>
+                </div>
+            </dl>{% if book.description %}<h2>About this book</h2>
+            <p>{{ book.description }}</p>{% endif %}{% if book.reason %}<p class="reason"><strong>Why it
+                    matches</strong><br>{{ book.reason }}</p>{% endif %}<div class="actions"><a class="btn-primary"
+                    href="{{ book.provider_url }}" rel="noopener noreferrer" target="_blank">View at {{ book.source }}
+                    ↗</a>{% if book.read_url %}<a class="btn-light" href="{{ book.read_url }}" rel="noopener noreferrer"
+                    target="_blank">Read at provider ↗</a>{% endif %}{% if book.download_url %}<a class="btn-light"
+                    href="{{ book.download_url }}" rel="noopener noreferrer" target="_blank">Download from provider
+                    ↗</a>{% endif %}</div>
+            <p class="rights-note">Access and copyright may depend on your country. Provider information is
+                authoritative.</p>
+        </div>
+    </article>
+</div>{% endblock %}

@@ -1,0 +1,5 @@
+# LangGraph workflow
+
+`SearchState` carries the query, page, extracted intent, search terms, selected providers, provider books and failures. Nodes run in this order: `understand` → `strategy` → `select_providers` → `fetch` → `normalize` → `verify_access` → `deduplicate` → `rank` → `recommend`. Both the query interpretation and provider strategy call the configured Ollama-compatible model. `fetch` calls real HTTP adapters and logs each provider. `verify_access` suppresses reading and download links when rights are unknown. Deduplication uses a shared ISBN-13 only when present; otherwise provider IDs stay separate.
+
+Ranking sends at most 12 retrieved title/author/description snippets. The model returns IDs plus title/description evidence. The deployed model has been observed returning either `recommendations` or `list`; both shapes are validated against the same retrieved ID set. Unknown IDs are discarded. If evidence is not an exact metadata excerpt, the provider title supplies a grounded explanation. If no retrieved ID is ranked, the workflow fails. Omitted retrieved books appear after the ranked subset. No generated metadata, rights or URLs are accepted.

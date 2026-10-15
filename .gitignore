@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+server.txt
+.admin-initial-credentials
+PROJECT.md
+.DS_Store
+__pycache__/
+*.py[cod]
+.venv/
+app/staticfiles/
+app/db.sqlite3
+*.sqlite3
+*.bak-*
+scripts/ai_tunnel.py
+requirements-dev.txt

@@ -1,0 +1,13 @@
+.env
+.env.*
+server.txt
+.admin-initial-credentials
+.venv/
+**/__pycache__/
+**/*.pyc
+**/*.bak-*
+app/db.sqlite3
+app/staticfiles/
+.git/
+docs/
+*.tar.gz

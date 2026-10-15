@@ -1,0 +1,29 @@
+{% extends 'base.html' %}{% block title %}Book search · FreeLib AI{% endblock %}{% block content %}<div
+    class="page-wrap results-page">
+    <section class="results-header"><span class="eyebrow">Explore the catalog</span>
+        <h1>Find a book that fits.</h1>
+        <p>Search in your own words. Recommendations use live provider results.</p>{% include 'discovery/_form.html' %}
+    </section>{% if error %}<div class="notice error" role="alert">{{ error }} <a
+            href="?q={{ query|urlencode }}">Retry</a></div>{% elif failures %}<div class="notice" role="status">Some
+        providers could not be reached: {{ failures|join:', ' }}. Showing available results.</div>{% endif %}{% if books %}<div class="result-heading">
+        <div><span class="eyebrow">Verified catalog results</span>
+            <h2>{{ books|length }} books found</h2>
+        </div><span class="result-note">AI ranking uses retrieved metadata only</span>
+    </div>
+    <div class="book-grid">{% for book in books %}<article class="book-card">
+            <div class="cover">{% if book.cover_url %}<img src="{{ book.cover_url }}" alt="Cover of {{ book.title }}"
+                    loading="lazy">{% else %}<span aria-hidden="true">📖</span>{% endif %}</div>
+            <div class="book-content"><span class="source">{{ book.source }}</span>
+                <h3><a href="{% url 'book_detail' %}?token={{ book.detail_token|urlencode }}">{{ book.title }}</a></h3>
+                <p class="authors">{% if book.authors %}{{ book.authors|join:', ' }}{% else %}Author not listed{% endif %}{% if book.year %} · {{ book.year }}{% endif %}</p>{% if book.description %}<p
+                    class="description">{{ book.description|truncatechars:180 }}</p>{% endif %}{% if book.reason %}<p
+                    class="reason"><strong>Why it matches</strong><br>{{ book.reason }}</p>{% endif %}<div
+                    class="book-foot"><span class="access">{{ book.access_status|title }}</span><a
+                        href="{% url 'book_detail' %}?token={{ book.detail_token|urlencode }}">Details →</a></div>
+            </div>
+        </article>{% endfor %}</div>{% elif searched and not error and form.is_valid %}<div class="empty"><span
+            aria-hidden="true">📚</span>
+        <h2>No matching books found</h2>
+        <p>Try a shorter topic or a different phrasing. Results come only from live providers.</p>
+    </div>{% endif %}
+</div>{% endblock %}
